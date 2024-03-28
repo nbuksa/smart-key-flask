@@ -4,23 +4,27 @@
 
 <div class="row">
     <div class="col-md-8">
-        <form>
+        <form method="POST">
             <div class="mb-3">
-                <label for="exampleInputFirstName" class="form-label">Ime korisnika</label>
-                <input type="text" class="form-control" aria-describedby="firstNameHelp">
+
+                {{form.first_name.label(class="form-control-label")}}
+                {{form.first_name(class="form-control")}}
                 <div id="firstNameHelp" class="form-text">Upisite ime korisnika</div>
             </div>
             <div class="mb-3">
-                <label for="exampleInputLastName" class="form-label">Prezime korisnika</label>
+                
+                {{form.last_name.label(class="form-control-label")}}
+                {{form.last_name(class="form-control")}}
                 <input type="text" class="form-control" aria-describedby="lastNameHelp">
                 <div id="lastNameHelp" class="form-text">Upisite prezime korisnika</div>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPIN" class="form-label">PIN korisnika</label>
-                <input type="text" class="form-control" aria-describedby="pinNameHelp">
-                <div id="pinNameHelp" class="form-text">Upisite PIN korisnika</div>
+                {{form.pin_code.label(class="form-control-label")}}
+                {{form.pin_code(class="form-control")}}
             </div>
             <div class="mb-3 form-check">
+                {{form.is_active(class="form-check-input")}}
+                {{form.is_active.label(class="form-check-label")}}
                 <input type="checkbox" class="form-check-input" id="exampleIsActive">
                 <label class="form-check-label" for="exampleIsActive">Aktivan?</label>
             </div>

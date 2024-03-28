@@ -1,7 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField
-
+from models.users import User
 from services.user_services import UserServices
 
 
@@ -14,7 +14,7 @@ class UserCreateForm(FlaskForm):
     last_name = StringField('Prezime')
     pin_code = StringField('PIN')
     is_active = BooleanField('Aktivan?')
-    submit = SubmitField()
+    submit = SubmitField('Kreiraj')
 
 
 
@@ -22,6 +22,8 @@ class UserCreateForm(FlaskForm):
 @app.route('/')
 def index():
     user = UserServices().get_user()
+    user_form = UserCreateForm()
+
     
     return render_template('index.html', user=user)
 
@@ -33,9 +35,18 @@ def about():
 
 
 # http://www.domena.hr/create-user
-@app.route('/create-user')
+@app.route('/create-user', methods=['GET', 'POST'])
 def create_user():
     user_form = UserCreateForm()
+
+    if user_form.validate_on_submit():
+        user_first_name = user_form.first_name.data
+        user_last_name = user_form.last_name.data
+        user_pin_code = user_form.pin_code.data
+        user_is_active = user_form.is_active.data
+        UserServices.create_user(User(user_first_name, user_last_name, user_pin_code, user_is_active))
+        redirect(url_for('index'))
+
     return render_template('create-user.html', form=user_form)
 
 
